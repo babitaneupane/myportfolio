@@ -1,63 +1,75 @@
 "use client";
-import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 export default function Hero() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
+  };
+
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 overflow-hidden">
-      {/* Background glowing orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[100px] -z-10" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] -z-10" />
-
+    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-3xl"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="max-w-4xl z-10 relative bg-background/20 backdrop-blur-[2px] p-8 md:p-12 rounded-[3rem] border border-white/5 shadow-2xl"
       >
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-accent-light text-lg mb-4 tracking-wider uppercase font-medium"
-        >
-          Welcome to my portfolio
-        </motion.p>
-        
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          Hi, I'm <br className="md:hidden" />
-          <span className="text-gradient">Babita Neupane</span>
-        </h1>
+        <motion.div variants={itemVariants} className="inline-block mb-6">
+          <span className="px-4 py-2 rounded-full border border-surface-border bg-surface/50 text-accent-light text-sm tracking-widest uppercase font-medium backdrop-blur-md">
+            Welcome to my universe
+          </span>
+        </motion.div>
+
+        <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-extrabold mb-6 leading-[1.1] tracking-tight">
+          Crafting Digital <br className="hidden md:block" />
+          <span className="text-gradient-accent">Experiences.</span>
+        </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-xl md:text-2xl text-slate-300 mb-10 max-w-2xl mx-auto"
+          variants={itemVariants}
+          className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-2xl mx-auto font-light leading-relaxed"
         >
-          Computer Engineering Student | Full Stack Developer | QA Engineer
+          I'm <strong className="text-foreground font-semibold">Babita Neupane</strong>. As a Computer Engineering student, I specialize in turning ideas into well-structured digital experiences through web development, QA, and engineering practices. I focus on writing clean code, ensuring software quality, and building applications that are both functional and user-centered.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           <a
             href="#projects"
-            className="group flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white px-8 py-4 rounded-full font-medium transition-all"
+            className="group relative flex items-center justify-center gap-3 bg-accent text-background px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(212,175,55,0.3)] overflow-hidden"
           >
-            View My Work
-            <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+            <span className="relative z-10 flex items-center gap-2">
+              View Selected Work
+              <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+            </span>
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-full"></div>
           </a>
           <a
             href="#contact"
-            className="flex items-center justify-center gap-2 glass hover:bg-white/10 px-8 py-4 rounded-full font-medium transition-all"
+            className="flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium transition-all hover:text-accent group relative"
           >
-            Contact Me
+            Let's Talk
+            <span className="absolute bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-opacity"></span>
           </a>
         </motion.div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-foreground/50 z-10"
+      >
+        <ChevronDown size={32} strokeWidth={1} />
       </motion.div>
     </section>
   );
